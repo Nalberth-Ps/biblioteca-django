@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Criar Conta{% endblock %}
+
+{% block content %}
+<style>
+    .errorlist {
+        margin: 0;
+    }
+</style>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-lg-6 col-md-8 col-sm-10 col-12">
+        <h2 class="my-4 text-center">Criar Conta</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Nome de Usuário</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="alert alert-danger mt-2">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_first_name">Nome</label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <div class="alert alert-danger mt-2">{{ form.first_name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_last_name">Sobrenome</label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <div class="alert alert-danger mt-2">{{ form.last_name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="alert alert-danger mt-2">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Senha</label>
+                <div class="input-group">
+                    {{ form.password }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i class="fas fa-eye" id="password-icon"></i>
+                        </button>
+                    </div>
+                </div>
+                {% if form.password.errors %}
+                    <div class="alert alert-danger mt-2">{{ form.password.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_password_confirm">Confirme a Senha</label>
+                <div class="input-group">
+                    {{ form.password_confirm }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="togglePasswordConfirm">
+                            <i class="fas fa-eye" id="password-confirm-icon"></i>
+                        </button>
+                    </div>
+                </div>
+                {% if form.password_confirm.errors %}
+                    <div class="alert alert-danger mt-2">{{ form.password_confirm.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Criar Conta</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#id_password');
+        const passwordIcon = document.querySelector('#password-icon');
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            passwordIcon.classList.toggle('fa-eye');
+            passwordIcon.classList.toggle('fa-eye-slash');
+        });
+
+        const togglePasswordConfirm = document.querySelector('#togglePasswordConfirm');
+        const passwordConfirm = document.querySelector('#id_password_confirm');
+        const passwordConfirmIcon = document.querySelector('#password-confirm-icon');
+        togglePasswordConfirm.addEventListener('click', function () {
+            const type = passwordConfirm.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordConfirm.setAttribute('type', type);
+            passwordConfirmIcon.classList.toggle('fa-eye');
+            passwordConfirmIcon.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>
+{% endblock %}

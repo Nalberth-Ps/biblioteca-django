@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Livro, Aluguel
@@ -69,7 +70,7 @@ def devolver_livro(request, aluguel_id):
         return redirect('lista_alugueis')
     return render(request, 'livros/confirmar_devolucao.html', {'aluguel': aluguel})
 
-def registro(request):
+def criar_conta(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
         if form.is_valid():
@@ -80,4 +81,4 @@ def registro(request):
             return redirect('lista_livros')
     else:
         form = RegistroForm()
-    return render(request, 'livros/registro.html', {'form': form})
+    return render(request, 'livros/criar_conta.html', {'form': form})
