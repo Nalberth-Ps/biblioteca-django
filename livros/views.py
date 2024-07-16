@@ -4,10 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Livro, Aluguel
-from .forms import LivroForm
-from django.shortcuts import render, redirect
-from .forms import RegistroForm
-from django.utils import timezone
+from .forms import LivroForm, RegistroForm
+from django.db import transaction
 from datetime import timedelta
 from django.contrib import messages
 
@@ -26,7 +24,6 @@ def criar_conta(request):
 
 def lista_livros(request):
     livros = Livro.objects.all()
-    # Verifica se o usuário possui multas pendentes
     pendencias = False
     if request.user.is_authenticated:
         alugueis_pendentes = Aluguel.objects.filter(usuario=request.user, multa__gt=0, data_devolucao__isnull=False)
@@ -38,27 +35,33 @@ def lista_livros(request):
 
 @login_required
 def alugar_livro(request, livro_id):
-    # Verifica se o usuário possui multas pendentes
     alugueis_pendentes = Aluguel.objects.filter(usuario=request.user, multa__gt=0, data_devolucao__isnull=False)
     if alugueis_pendentes.exists():
         messages.error(request, 'Você não pode alugar um livro enquanto tiver multas pendentes. Por favor, regularize sua situação.')
         return redirect('lista_livros')
 
     livro = get_object_or_404(Livro, id=livro_id)
-    if livro.disponivel:
-        data_devolucao_prevista = timezone.now().date() + timedelta(days=14)  # 14 dias de prazo
-        aluguel = Aluguel.objects.create(livro=livro, usuario=request.user, data_devolucao_prevista=data_devolucao_prevista)
+    if not livro.disponivel:
+        messages.error(request, 'Este livro não está disponível no momento.')
+        return redirect('lista_livros')
+
+    with transaction.atomic():
         livro.quantidade -= 1
         livro.save()
+        data_devolucao_prevista = timezone.now().date() + timedelta(days=14)
+        Aluguel.objects.create(livro=livro, usuario=request.user, data_devolucao_prevista=data_devolucao_prevista)
+
     return redirect('meus_alugueis')
 
 @login_required
 def devolver_livro(request, aluguel_id):
     aluguel = get_object_or_404(Aluguel, id=aluguel_id, usuario=request.user)
-    aluguel.data_devolucao = timezone.now().date()
-    aluguel.save()
-    aluguel.livro.quantidade += 1
-    aluguel.livro.save()
+    with transaction.atomic():
+        aluguel.data_devolucao = timezone.now().date()
+        aluguel.save()
+        aluguel.livro.quantidade += 1
+        aluguel.livro.save()
+
     return redirect('meus_alugueis')
 
 @login_required
