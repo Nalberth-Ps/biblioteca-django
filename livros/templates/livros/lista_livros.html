@@ -4,70 +4,65 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="my-4">Lista de Livros</h1>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Autor</th>
-                    <th>ISBN</th>
-                    <th>Disponibilidade</th>
-                    {% if user.is_staff %}
-                        <th>Ações</th>
-                    {% endif %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for livro in livros %}
-                    <tr>
-                        <td>{{ livro.titulo }}</td>
-                        <td>{{ livro.autor }}</td>
-                        <td>{{ livro.isbn }}</td>
-                        <td>
-                            {% if livro.disponivel %}
-                                Disponível
+    <h1 class="my-4 text-center">Lista de Livros</h1>
+
+    {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        {% for livro in livros %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ livro.titulo }}</h5>
+                        <p class="card-text"><strong>Autor:</strong> {{ livro.autor }}</p>
+                        <p class="card-text"><strong>ISBN:</strong> {{ livro.isbn }}</p>
+                        <p class="card-text"><strong>Disponibilidade:</strong> {{ livro.quantidade }} cópias disponíveis</p>
+                        <p class="card-text"><strong>Resumo:</strong> {{ livro.resumo }}</p>
+                    </div>
+                    <div class="card-footer">
+                        {% if user.is_authenticated %}
+                            {% if pendencias %}
+                                <button class="btn btn-danger btn-block" disabled>Multa pendente</button>
                             {% else %}
-                                Indisponível
+                                {% if livro.disponivel %}
+                                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#confirmAlugarModal" data-id="{{ livro.id }}">Alugar</button>
+                                {% else %}
+                                    <button class="btn btn-secondary btn-block" disabled>Indisponível</button>
+                                {% endif %}
                             {% endif %}
-                        </td>
-                        {% if user.is_staff %}
-                            <td>
-                                <a href="{% url 'editar_livro' livro.id %}" class="btn btn-sm btn-warning">
-                                    <i class="fas fa-edit"></i> Editar
-                                </a>
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ livro.id }}">
-                                    <i class="fas fa-trash-alt"></i> Excluir
-                                </button>
-                            </td>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-primary btn-block">Entrar para Alugar</a>
                         {% endif %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-    <a href="{% url 'adicionar_livro' %}" class="btn btn-success my-4">Adicionar Novo Livro</a>
 </div>
 
 <!-- Modal de Confirmação -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="confirmAlugarModal" tabindex="-1" role="dialog" aria-labelledby="confirmAlugarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <h5 class="modal-title" id="confirmAlugarModalLabel">Confirmar Aluguel</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Você tem certeza que deseja excluir este livro?
+                <p>Você está prestes a alugar este livro. Se você atrasar a devolução, estará sujeito a uma multa de R$ 1,00 por dia de atraso.</p>
+                <p>Deseja continuar?</p>
             </div>
             <div class="modal-footer">
-                <form id="deleteForm" method="post">
-                    {% csrf_token %}
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Excluir</button>
-                </form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a href="#" id="confirmAlugarButton" class="btn btn-primary">Confirmar Aluguel</a>
             </div>
         </div>
     </div>
@@ -75,12 +70,11 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var confirmDeleteModal = document.getElementById('confirmDeleteModal');
-        confirmDeleteModal.addEventListener('show.bs.modal', function(event) {
-            var button = event.relatedTarget;
-            var livroId = button.getAttribute('data-id');
-            var form = document.getElementById('deleteForm');
-            form.action = '/deletar/' + livroId + '/';
+        $('#confirmAlugarModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            var livroId = button.data('id');
+            var confirmButton = $('#confirmAlugarButton');
+            confirmButton.attr('href', '/alugar/' + livroId + '/');
         });
     });
 </script>

@@ -34,16 +34,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'lista_livros' %}">Livros</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'adicionar_livro' %}">Adicionar Livro</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'meus_alugueis' %}">Meus Aluguéis</a>
+                    </li>
+                {% endif %}
             </ul>
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-link nav-link" style="padding: 0; border: none; background: none;">Logout</button>
+                            <button type="submit" class="btn btn-link nav-link" style="padding: 0; border: none; background: none;">Sair</button>
                         </form>
                     </li>
                 {% else %}

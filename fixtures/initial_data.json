@@ -1,0 +1,112 @@
+[
+    {
+        "model": "livros.livro",
+        "pk": 1,
+        "fields": {
+            "titulo": "O Senhor dos Anéis",
+            "autor": "J.R.R. Tolkien",
+            "isbn": "9780544003415",
+            "quantidade": 5,
+            "resumo": "Uma das maiores obras de fantasia de todos os tempos, escrita por J.R.R. Tolkien."
+        }
+    },
+    {
+        "model": "livros.livro",
+        "pk": 2,
+        "fields": {
+            "titulo": "Harry Potter e a Pedra Filosofal",
+            "autor": "J.K. Rowling",
+            "isbn": "9780747532699",
+            "quantidade": 3,
+            "resumo": "O primeiro livro da série Harry Potter, onde conhecemos o mundo mágico de J.K. Rowling."
+        }
+    },
+    {
+        "model": "livros.livro",
+        "pk": 3,
+        "fields": {
+            "titulo": "1984",
+            "autor": "George Orwell",
+            "isbn": "9780451524935",
+            "quantidade": 4,
+            "resumo": "Uma distopia clássica que explora os perigos de um regime totalitário e a perda da liberdade."
+        }
+    },
+    {
+        "model": "livros.livro",
+        "pk": 4,
+        "fields": {
+            "titulo": "O Hobbit",
+            "autor": "J.R.R. Tolkien",
+            "isbn": "9780618968633",
+            "quantidade": 2,
+            "resumo": "A história de Bilbo Bolseiro, um hobbit que embarca em uma aventura inesperada."
+        }
+    },
+    {
+        "model": "livros.livro",
+        "pk": 5,
+        "fields": {
+            "titulo": "A Game of Thrones",
+            "autor": "George R.R. Martin",
+            "isbn": "9780553103540",
+            "quantidade": 6,
+            "resumo": "O primeiro livro da série As Crônicas de Gelo e Fogo, cheio de intrigas e batalhas épicas."
+        }
+    },
+    {
+        "model": "livros.livro",
+        "pk": 6,
+        "fields": {
+            "titulo": "Dune",
+            "autor": "Frank Herbert",
+            "isbn": "9780441013593",
+            "quantidade": 3,
+            "resumo": "Um clássico da ficção científica que narra a luta pelo controle de um deserto valioso."
+        }
+    },
+    {
+        "model": "livros.livro",
+        "pk": 7,
+        "fields": {
+            "titulo": "To Kill a Mockingbird",
+            "autor": "Harper Lee",
+            "isbn": "9780061120084",
+            "quantidade": 5,
+            "resumo": "Uma obra-prima sobre as injustiças raciais e a perda da inocência."
+        }
+    },
+    {
+        "model": "livros.livro",
+        "pk": 8,
+        "fields": {
+            "titulo": "Pride and Prejudice",
+            "autor": "Jane Austen",
+            "isbn": "9781503290563",
+            "quantidade": 4,
+            "resumo": "Um romance clássico que explora temas de amor e sociedade na Inglaterra do século XIX."
+        }
+    },
+    {
+        "model": "livros.livro",
+        "pk": 9,
+        "fields": {
+            "titulo": "The Great Gatsby",
+            "autor": "F. Scott Fitzgerald",
+            "isbn": "9780743273565",
+            "quantidade": 2,
+            "resumo": "Uma crítica mordaz ao sonho americano através da história de Jay Gatsby."
+        }
+    },
+    {
+        "model": "livros.livro",
+        "pk": 10,
+        "fields": {
+            "titulo": "Moby Dick",
+            "autor": "Herman Melville",
+            "isbn": "9781503280786",
+            "quantidade": 1,
+            "resumo": "A épica jornada do Capitão Ahab em busca da baleia branca Moby Dick."
+        }
+    }
+]

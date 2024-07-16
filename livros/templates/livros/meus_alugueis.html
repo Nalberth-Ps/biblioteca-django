@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Meus Aluguéis{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4 text-center">Meus Aluguéis</h1>
+
+    {% if alugueis %}
+        <div class="row">
+            {% for aluguel in alugueis %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                      <div class="card-body">
+                          <h5 class="card-title">{{ aluguel.livro.titulo }}</h5>
+                          <p class="card-text"><strong>Autor:</strong> {{ aluguel.livro.autor }}</p>
+                          <p class="card-text"><strong>ISBN:</strong> {{ aluguel.livro.isbn }}</p>
+                          <p class="card-text"><strong>Data de Aluguel:</strong> {{ aluguel.data_aluguel }}</p>
+                          <p class="card-text"><strong>Data de Devolução Prevista:</strong> {{ aluguel.data_devolucao_prevista }}</p>
+                          <p class="card-text"><strong>Data de Devolução:</strong> {{ aluguel.data_devolucao|default:"-" }}</p>
+                          <p class="card-text"><strong>Resumo:</strong> {{ aluguel.livro.resumo }}</p>
+                          {% if aluguel.calcular_multa > 0 %}
+                              <p class="card-text text-danger"><strong>Multa:</strong> R$ {{ aluguel.calcular_multa }}</p>
+                          {% else %}
+                              <p class="card-text"><strong>Multa:</strong> R$ 0.00</p>
+                          {% endif %}
+                      </div>
+                      <div class="card-footer">
+                          {% if not aluguel.data_devolucao %}
+                              <a href="{% url 'devolver_livro' aluguel.id %}" class="btn btn-success btn-block">Devolver</a>
+                          {% else %}
+                              <span class="badge badge-success">Devolvido</span>
+                              {% if aluguel.calcular_multa > 0 %}
+                                  <span class="badge badge-danger">Devolvido com atraso</span>
+                              {% endif %}
+                          {% endif %}
+                      </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center my-5">
+            <h2>Você ainda não possui aluguéis.</h2>
+            <p class="lead">Explore nossa coleção de livros e comece a alugar agora mesmo!</p>
+            <a href="{% url 'lista_livros' %}" class="btn btn-primary btn-lg">Ver Livros</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

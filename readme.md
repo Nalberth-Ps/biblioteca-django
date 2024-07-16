@@ -38,17 +38,23 @@ TODO: Adicionar descrição do projeto
     python manage.py migrate
     ```
 
-5. Crie um superusuário:
+5. Carregue os dados iniciais:
+
+   ```sh
+    python manage.py loaddata fixtures/initial_data.json
+    ```
+
+6. Crie um superusuário:
 
    ```sh
     python manage.py createsuperuser
     ```
 
-6. Execute o servidor de desenvolvimento:
+7. Execute o servidor de desenvolvimento:
 
    ```sh
     python manage.py runserver
     ```
 
-7. Acesse `http://localhost:8000/`
+8. Acesse `http://localhost:8000/`
 

@@ -1,74 +1,15 @@
 from django.utils import timezone
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as auth_logout
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Livro, Aluguel
 from .forms import LivroForm
 from django.shortcuts import render, redirect
 from .forms import RegistroForm
-
-def lista_livros(request):
-    livros = Livro.objects.all()
-    return render(request, 'livros/lista_livros.html', {'livros': livros})
-
-@login_required
-def alugar_livro(request, livro_id):
-    livro = get_object_or_404(Livro, id=livro_id)
-    if livro.disponivel:
-        Aluguel.objects.create(usuario=request.user, livro=livro)
-        livro.disponivel = False
-        livro.save()
-        return redirect('lista_livros')
-    return render(request, 'livros/detalhe_livro.html', {'livro': livro})
-
-@login_required
-def adicionar_livro(request):
-    if request.method == 'POST':
-        form = LivroForm(request.POST)
-        if form.is_valid():
-            livro = form.save(commit=False)
-            livro.disponivel = True
-            livro.save()
-            return redirect('lista_livros')
-    else:
-        form = LivroForm()
-    return render(request, 'livros/adicionar_livro.html', {'form': form})
-
-@login_required
-def editar_livro(request, livro_id):
-    livro = get_object_or_404(Livro, id=livro_id)
-    if request.method == 'POST':
-        form = LivroForm(request.POST, instance=livro)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_livros')
-    else:
-        form = LivroForm(instance=livro)
-    return render(request, 'livros/editar_livro.html', {'form': form, 'livro': livro})
-
-@login_required
-def deletar_livro(request, livro_id):
-    livro = get_object_or_404(Livro, id=livro_id)
-    if request.method == 'POST':
-        livro.delete()
-        return redirect('lista_livros')
-    return render(request, 'livros/confirmar_delecao.html', {'livro': livro})
-
-@login_required
-def lista_alugueis(request):
-    alugueis = Aluguel.objects.filter(usuario=request.user)
-    return render(request, 'livros/lista_alugueis.html', {'alugueis': alugueis})
-
-@login_required
-def devolver_livro(request, aluguel_id):
-    aluguel = get_object_or_404(Aluguel, id=aluguel_id)
-    if request.method == 'POST':
-        aluguel.data_devolucao = timezone.now()
-        aluguel.livro.disponivel = True
-        aluguel.livro.save()
-        aluguel.save()
-        return redirect('lista_alugueis')
-    return render(request, 'livros/confirmar_devolucao.html', {'aluguel': aluguel})
+from django.utils import timezone
+from datetime import timedelta
+from django.contrib import messages
 
 def criar_conta(request):
     if request.method == 'POST':
@@ -82,3 +23,49 @@ def criar_conta(request):
     else:
         form = RegistroForm()
     return render(request, 'livros/criar_conta.html', {'form': form})
+
+def lista_livros(request):
+    livros = Livro.objects.all()
+    # Verifica se o usuário possui multas pendentes
+    pendencias = False
+    if request.user.is_authenticated:
+        alugueis_pendentes = Aluguel.objects.filter(usuario=request.user, multa__gt=0, data_devolucao__isnull=False)
+        pendencias = alugueis_pendentes.exists()
+        if pendencias:
+            messages.error(request, 'Você não pode alugar um livro enquanto tiver multas pendentes. Por favor, regularize sua situação.')
+
+    return render(request, 'livros/lista_livros.html', {'livros': livros, 'pendencias': pendencias})
+
+@login_required
+def alugar_livro(request, livro_id):
+    # Verifica se o usuário possui multas pendentes
+    alugueis_pendentes = Aluguel.objects.filter(usuario=request.user, multa__gt=0, data_devolucao__isnull=False)
+    if alugueis_pendentes.exists():
+        messages.error(request, 'Você não pode alugar um livro enquanto tiver multas pendentes. Por favor, regularize sua situação.')
+        return redirect('lista_livros')
+
+    livro = get_object_or_404(Livro, id=livro_id)
+    if livro.disponivel:
+        data_devolucao_prevista = timezone.now().date() + timedelta(days=14)  # 14 dias de prazo
+        aluguel = Aluguel.objects.create(livro=livro, usuario=request.user, data_devolucao_prevista=data_devolucao_prevista)
+        livro.quantidade -= 1
+        livro.save()
+    return redirect('meus_alugueis')
+
+@login_required
+def devolver_livro(request, aluguel_id):
+    aluguel = get_object_or_404(Aluguel, id=aluguel_id, usuario=request.user)
+    aluguel.data_devolucao = timezone.now().date()
+    aluguel.save()
+    aluguel.livro.quantidade += 1
+    aluguel.livro.save()
+    return redirect('meus_alugueis')
+
+@login_required
+def meus_alugueis(request):
+    alugueis = Aluguel.objects.filter(usuario=request.user)
+    return render(request, 'livros/meus_alugueis.html', {'alugueis': alugueis})
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('lista_livros')
