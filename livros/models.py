@@ -18,6 +18,8 @@ class Livro(models.Model):
         return self.titulo
 
 class Aluguel(models.Model):
+    TAXA_MULTA_DIARIA = 1.00  # Taxa de multa por dia de atraso
+
     livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     data_aluguel = models.DateField(auto_now_add=True)
@@ -25,23 +27,22 @@ class Aluguel(models.Model):
     data_devolucao_prevista = models.DateField(default=timezone.now() + timedelta(days=14))
     multa = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
 
-    @property
     def calcular_multa(self):
         if self.data_devolucao:
             if self.data_devolucao > self.data_devolucao_prevista:
                 dias_atraso = (self.data_devolucao - self.data_devolucao_prevista).days
-                return dias_atraso * 1.00  # Por exemplo, 1.00 por dia de atraso
+                return dias_atraso * self.TAXA_MULTA_DIARIA
             else:
                 return 0.00
         else:
             if timezone.now().date() > self.data_devolucao_prevista:
                 dias_atraso = (timezone.now().date() - self.data_devolucao_prevista).days
-                return dias_atraso * 1.00  # Por exemplo, 1.00 por dia de atraso
+                return dias_atraso * self.TAXA_MULTA_DIARIA
             else:
                 return 0.00
 
     def save(self, *args, **kwargs):
-        self.multa = self.calcular_multa
+        self.multa = self.calcular_multa()
         super(Aluguel, self).save(*args, **kwargs)
 
     def __str__(self):
