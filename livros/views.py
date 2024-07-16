@@ -25,13 +25,17 @@ def criar_conta(request):
 def lista_livros(request):
     livros = Livro.objects.all()
     pendencias = False
+    alugueis_ativos = []
+
     if request.user.is_authenticated:
         alugueis_pendentes = Aluguel.objects.filter(usuario=request.user, multa__gt=0, data_devolucao__isnull=False)
         pendencias = alugueis_pendentes.exists()
         if pendencias:
             messages.error(request, 'Você não pode alugar um livro enquanto tiver multas pendentes. Por favor, regularize sua situação.')
+        else:
+            alugueis_ativos = Aluguel.objects.filter(usuario=request.user, data_devolucao__isnull=True).values_list('livro_id', flat=True)
 
-    return render(request, 'livros/lista_livros.html', {'livros': livros, 'pendencias': pendencias})
+    return render(request, 'livros/lista_livros.html', {'livros': livros, 'pendencias': pendencias, 'alugueis_ativos': alugueis_ativos})
 
 @login_required
 def alugar_livro(request, livro_id):
@@ -41,6 +45,13 @@ def alugar_livro(request, livro_id):
         return redirect('lista_livros')
 
     livro = get_object_or_404(Livro, id=livro_id)
+    
+    # Verifica se o usuário já possui um aluguel ativo para este livro
+    aluguel_ativo = Aluguel.objects.filter(livro=livro, usuario=request.user, data_devolucao__isnull=True)
+    if aluguel_ativo.exists():
+        messages.error(request, 'Você já possui um aluguel ativo para este livro.')
+        return redirect('lista_livros')
+    
     if not livro.disponivel:
         messages.error(request, 'Este livro não está disponível no momento.')
         return redirect('lista_livros')

@@ -14,9 +14,21 @@
         </div>
     {% endif %}
 
-    <div class="row">
+    {% if success_message %}
+        <div class="alert alert-success" role="alert">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
+    <div class="row mb-4">
+        <div class="col-md-6 offset-md-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar livros...">
+        </div>
+    </div>
+
+    <div class="row" id="livrosContainer">
         {% for livro in livros %}
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4 livro-card">
                 <div class="card h-100">
                     <div class="card-body">
                         <h5 class="card-title">{{ livro.titulo }}</h5>
@@ -31,7 +43,11 @@
                                 <button class="btn btn-danger btn-block" disabled>Multa pendente</button>
                             {% else %}
                                 {% if livro.disponivel %}
-                                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#confirmAlugarModal" data-id="{{ livro.id }}">Alugar</button>
+                                    {% if livro.id in alugueis_ativos %}
+                                        <button class="btn btn-warning btn-block" disabled>Livro alugado</button>
+                                    {% else %}
+                                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#confirmAlugarModal" data-id="{{ livro.id }}">Alugar</button>
+                                    {% endif %}
                                 {% else %}
                                     <button class="btn btn-secondary btn-block" disabled>Indisponível</button>
                                 {% endif %}
@@ -43,6 +59,12 @@
                 </div>
             </div>
         {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <p id="noResultsMessage" class="d-none">Nenhum livro encontrado.</p>
+        </div>
     </div>
 </div>
 
@@ -75,6 +97,32 @@
             var livroId = button.data('id');
             var confirmButton = $('#confirmAlugarButton');
             confirmButton.attr('href', '/alugar/' + livroId + '/');
+        });
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            var searchQuery = this.value.toLowerCase();
+            var livros = document.getElementsByClassName('livro-card');
+            var noResultsMessage = document.getElementById('noResultsMessage');
+            var hasVisibleBooks = false;
+
+            Array.from(livros).forEach(function(livro) {
+                var titulo = livro.getElementsByClassName('card-title')[0].innerText.toLowerCase();
+                var autor = livro.getElementsByClassName('card-text')[0].innerText.toLowerCase();
+                var isbn = livro.getElementsByClassName('card-text')[1].innerText.toLowerCase();
+
+                if (titulo.includes(searchQuery) || autor.includes(searchQuery) || isbn.includes(searchQuery)) {
+                    livro.style.display = '';
+                    hasVisibleBooks = true;
+                } else {
+                    livro.style.display = 'none';
+                }
+            });
+
+            if (hasVisibleBooks) {
+                noResultsMessage.classList.add('d-none');
+            } else {
+                noResultsMessage.classList.remove('d-none');
+            }
         });
     });
 </script>
