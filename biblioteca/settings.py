@@ -130,3 +130,15 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'lista_livros'
+
+# Configurações de arquivos estáticos
+STATIC_URL = '/static/'
+
+# Diretório onde os arquivos estáticos estão localizados
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'livros/static'),
+]
+
+# Diretório para arquivos de mídia (uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

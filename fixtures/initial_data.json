@@ -1,13 +1,108 @@
 [
     {
+        "model": "livros.autor",
+        "pk": 1,
+        "fields": {
+            "nome": "J.R.R. Tolkien"
+        }
+    },
+    {
+        "model": "livros.autor",
+        "pk": 2,
+        "fields": {
+            "nome": "J.K. Rowling"
+        }
+    },
+    {
+        "model": "livros.autor",
+        "pk": 3,
+        "fields": {
+            "nome": "George Orwell"
+        }
+    },
+    {
+        "model": "livros.autor",
+        "pk": 4,
+        "fields": {
+            "nome": "George R.R. Martin"
+        }
+    },
+    {
+        "model": "livros.autor",
+        "pk": 5,
+        "fields": {
+            "nome": "Frank Herbert"
+        }
+    },
+    {
+        "model": "livros.autor",
+        "pk": 6,
+        "fields": {
+            "nome": "Harper Lee"
+        }
+    },
+    {
+        "model": "livros.autor",
+        "pk": 7,
+        "fields": {
+            "nome": "Jane Austen"
+        }
+    },
+    {
+        "model": "livros.autor",
+        "pk": 8,
+        "fields": {
+            "nome": "F. Scott Fitzgerald"
+        }
+    },
+    {
+        "model": "livros.autor",
+        "pk": 9,
+        "fields": {
+            "nome": "Herman Melville"
+        }
+    },
+    {
+        "model": "livros.categoria",
+        "pk": 1,
+        "fields": {
+            "nome": "Fantasia"
+        }
+    },
+    {
+        "model": "livros.categoria",
+        "pk": 2,
+        "fields": {
+            "nome": "Ficção Científica"
+        }
+    },
+    {
+        "model": "livros.categoria",
+        "pk": 3,
+        "fields": {
+            "nome": "Clássico"
+        }
+    },
+    {
+        "model": "livros.categoria",
+        "pk": 4,
+        "fields": {
+            "nome": "Romance"
+        }
+    },
+    {
         "model": "livros.livro",
         "pk": 1,
         "fields": {
             "titulo": "O Senhor dos Anéis",
-            "autor": "J.R.R. Tolkien",
+            "autor": 1,
             "isbn": "9780544003415",
             "quantidade": 5,
-            "resumo": "Uma das maiores obras de fantasia de todos os tempos, escrita por J.R.R. Tolkien."
+            "resumo": "Uma das maiores obras de fantasia de todos os tempos, escrita por J.R.R. Tolkien.",
+            "data_publicacao": "1954-07-29",
+            "editora": "Allen & Unwin",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [1]
         }
     },
     {
@@ -15,10 +110,14 @@
         "pk": 2,
         "fields": {
             "titulo": "Harry Potter e a Pedra Filosofal",
-            "autor": "J.K. Rowling",
+            "autor": 2,
             "isbn": "9780747532699",
             "quantidade": 3,
-            "resumo": "O primeiro livro da série Harry Potter, onde conhecemos o mundo mágico de J.K. Rowling."
+            "resumo": "O primeiro livro da série Harry Potter, onde conhecemos o mundo mágico de J.K. Rowling.",
+            "data_publicacao": "1997-06-26",
+            "editora": "Bloomsbury",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [1]
         }
     },
     {
@@ -26,10 +125,14 @@
         "pk": 3,
         "fields": {
             "titulo": "1984",
-            "autor": "George Orwell",
+            "autor": 3,
             "isbn": "9780451524935",
             "quantidade": 4,
-            "resumo": "Uma distopia clássica que explora os perigos de um regime totalitário e a perda da liberdade."
+            "resumo": "Uma distopia clássica que explora os perigos de um regime totalitário e a perda da liberdade.",
+            "data_publicacao": "1949-06-08",
+            "editora": "Secker & Warburg",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [3]
         }
     },
     {
@@ -37,10 +140,14 @@
         "pk": 4,
         "fields": {
             "titulo": "O Hobbit",
-            "autor": "J.R.R. Tolkien",
+            "autor": 1,
             "isbn": "9780618968633",
             "quantidade": 2,
-            "resumo": "A história de Bilbo Bolseiro, um hobbit que embarca em uma aventura inesperada."
+            "resumo": "A história de Bilbo Bolseiro, um hobbit que embarca em uma aventura inesperada.",
+            "data_publicacao": "1937-09-21",
+            "editora": "Allen & Unwin",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [1]
         }
     },
     {
@@ -48,10 +155,14 @@
         "pk": 5,
         "fields": {
             "titulo": "A Game of Thrones",
-            "autor": "George R.R. Martin",
+            "autor": 4,
             "isbn": "9780553103540",
             "quantidade": 6,
-            "resumo": "O primeiro livro da série As Crônicas de Gelo e Fogo, cheio de intrigas e batalhas épicas."
+            "resumo": "O primeiro livro da série As Crônicas de Gelo e Fogo, cheio de intrigas e batalhas épicas.",
+            "data_publicacao": "1996-08-06",
+            "editora": "Bantam Spectra",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [1]
         }
     },
     {
@@ -59,10 +170,14 @@
         "pk": 6,
         "fields": {
             "titulo": "Dune",
-            "autor": "Frank Herbert",
+            "autor": 5,
             "isbn": "9780441013593",
             "quantidade": 3,
-            "resumo": "Um clássico da ficção científica que narra a luta pelo controle de um deserto valioso."
+            "resumo": "Um clássico da ficção científica que narra a luta pelo controle de um deserto valioso.",
+            "data_publicacao": "1965-08-01",
+            "editora": "Chilton Books",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [2]
         }
     },
     {
@@ -70,10 +185,14 @@
         "pk": 7,
         "fields": {
             "titulo": "To Kill a Mockingbird",
-            "autor": "Harper Lee",
+            "autor": 6,
             "isbn": "9780061120084",
             "quantidade": 5,
-            "resumo": "Uma obra-prima sobre as injustiças raciais e a perda da inocência."
+            "resumo": "Uma obra-prima sobre as injustiças raciais e a perda da inocência.",
+            "data_publicacao": "1960-07-11",
+            "editora": "J.B. Lippincott & Co.",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [3]
         }
     },
     {
@@ -81,10 +200,14 @@
         "pk": 8,
         "fields": {
             "titulo": "Pride and Prejudice",
-            "autor": "Jane Austen",
+            "autor": 7,
             "isbn": "9781503290563",
             "quantidade": 4,
-            "resumo": "Um romance clássico que explora temas de amor e sociedade na Inglaterra do século XIX."
+            "resumo": "Um romance clássico que explora temas de amor e sociedade na Inglaterra do século XIX.",
+            "data_publicacao": "1813-01-28",
+            "editora": "T. Egerton, Whitehall",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [4]
         }
     },
     {
@@ -92,10 +215,14 @@
         "pk": 9,
         "fields": {
             "titulo": "The Great Gatsby",
-            "autor": "F. Scott Fitzgerald",
+            "autor": 8,
             "isbn": "9780743273565",
             "quantidade": 2,
-            "resumo": "Uma crítica mordaz ao sonho americano através da história de Jay Gatsby."
+            "resumo": "Uma crítica mordaz ao sonho americano através da história de Jay Gatsby.",
+            "data_publicacao": "1925-04-10",
+            "editora": "Charles Scribner's Sons",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [3]
         }
     },
     {
@@ -103,10 +230,14 @@
         "pk": 10,
         "fields": {
             "titulo": "Moby Dick",
-            "autor": "Herman Melville",
+            "autor": 9,
             "isbn": "9781503280786",
             "quantidade": 1,
-            "resumo": "A épica jornada do Capitão Ahab em busca da baleia branca Moby Dick."
+            "resumo": "A épica jornada do Capitão Ahab em busca da baleia branca Moby Dick.",
+            "data_publicacao": "1851-11-14",
+            "editora": "Richard Bentley",
+            "capa": "images/Game_of_Thrones_capa.webp",
+            "categorias": [3]
         }
     }
 ]

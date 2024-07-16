@@ -11,30 +11,31 @@
             {% for aluguel in alugueis %}
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-                      <div class="card-body">
-                          <h5 class="card-title">{{ aluguel.livro.titulo }}</h5>
-                          <p class="card-text"><strong>Autor:</strong> {{ aluguel.livro.autor }}</p>
-                          <p class="card-text"><strong>ISBN:</strong> {{ aluguel.livro.isbn }}</p>
-                          <p class="card-text"><strong>Data de Aluguel:</strong> {{ aluguel.data_aluguel }}</p>
-                          <p class="card-text"><strong>Data de Devolução Prevista:</strong> {{ aluguel.data_devolucao_prevista }}</p>
-                          <p class="card-text"><strong>Data de Devolução:</strong> {{ aluguel.data_devolucao|default:"-" }}</p>
-                          <p class="card-text"><strong>Resumo:</strong> {{ aluguel.livro.resumo }}</p>
-                          {% if aluguel.calcular_multa > 0 %}
-                              <p class="card-text text-danger"><strong>Multa:</strong> R$ {{ aluguel.calcular_multa }}</p>
-                          {% else %}
-                              <p class="card-text"><strong>Multa:</strong> R$ 0.00</p>
-                          {% endif %}
-                      </div>
-                      <div class="card-footer">
-                          {% if not aluguel.data_devolucao %}
-                              <a href="{% url 'devolver_livro' aluguel.id %}" class="btn btn-success btn-block">Devolver</a>
-                          {% else %}
-                              <span class="badge badge-success">Devolvido</span>
-                              {% if aluguel.calcular_multa > 0 %}
-                                  <span class="badge badge-danger">Devolvido com atraso</span>
-                              {% endif %}
-                          {% endif %}
-                      </div>
+                        <img src="{{ aluguel.livro.capa.url }}" class="card-img-top img-fluid" alt="{{ aluguel.livro.titulo }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ aluguel.livro.titulo }}</h5>
+                            <p class="card-text"><strong>Autor:</strong> {{ aluguel.livro.autor.nome }}</p>
+                            <p class="card-text"><strong>ISBN:</strong> {{ aluguel.livro.isbn }}</p>
+                            <p class="card-text"><strong>Data de Aluguel:</strong> {{ aluguel.data_aluguel }}</p>
+                            <p class="card-text"><strong>Data de Devolução Prevista:</strong> {{ aluguel.data_devolucao_prevista }}</p>
+                            <p class="card-text"><strong>Data de Devolução:</strong> {{ aluguel.data_devolucao|default:"-" }}</p>
+                            <p class="card-text"><strong>Resumo:</strong> {{ aluguel.livro.resumo }}</p>
+                            {% if aluguel.calcular_multa > 0 %}
+                                <p class="card-text text-danger"><strong>Multa:</strong> R$ {{ aluguel.calcular_multa }}</p>
+                            {% else %}
+                                <p class="card-text"><strong>Multa:</strong> R$ 0.00</p>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer text-center">
+                            {% if not aluguel.data_devolucao %}
+                                <a href="{% url 'devolver_livro' aluguel.id %}" class="btn btn-success btn-block">Devolver</a>
+                            {% else %}
+                                <span class="badge badge-success">Devolvido</span>
+                                {% if aluguel.calcular_multa > 0 %}
+                                    <span class="badge badge-danger">Devolvido com atraso</span>
+                                {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}

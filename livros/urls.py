@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from .views import lista_livros, alugar_livro, meus_alugueis, criar_conta, devolver_livro, logout_view
 
 urlpatterns = [
@@ -9,3 +11,6 @@ urlpatterns = [
     path('devolver/<int:aluguel_id>/', devolver_livro, name='devolver_livro'),
     path('logout/', logout_view, name='logout'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

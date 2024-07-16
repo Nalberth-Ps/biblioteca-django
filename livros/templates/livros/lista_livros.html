@@ -30,12 +30,18 @@
         {% for livro in livros %}
             <div class="col-md-4 mb-4 livro-card">
                 <div class="card h-100">
+                    <img src="{{ livro.capa.url }}" class="card-img-top" alt="{{ livro.titulo }}" style="object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title">{{ livro.titulo }}</h5>
-                        <p class="card-text"><strong>Autor:</strong> {{ livro.autor }}</p>
+                        <p class="card-text"><strong>Autor:</strong> {{ livro.autor.nome }}</p>
                         <p class="card-text"><strong>ISBN:</strong> {{ livro.isbn }}</p>
                         <p class="card-text"><strong>Disponibilidade:</strong> {{ livro.quantidade }} cópias disponíveis</p>
                         <p class="card-text"><strong>Resumo:</strong> {{ livro.resumo }}</p>
+                        <p class="card-text"><strong>Categorias:</strong> 
+                            {% for categoria in livro.categorias.all %}
+                                {{ categoria.nome }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
                     </div>
                     <div class="card-footer">
                         {% if user.is_authenticated %}
