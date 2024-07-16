@@ -5,45 +5,47 @@
 {% block content %}
 <div class="container">
     <h1 class="my-4">Lista de Livros</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>ISBN</th>
-                <th>Disponibilidade</th>
-                {% if user.is_staff %}
-                    <th>Ações</th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for livro in livros %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>{{ livro.titulo }}</td>
-                    <td>{{ livro.autor }}</td>
-                    <td>{{ livro.isbn }}</td>
-                    <td>
-                        {% if livro.disponivel %}
-                            Disponível
-                        {% else %}
-                            Indisponível
-                        {% endif %}
-                    </td>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>ISBN</th>
+                    <th>Disponibilidade</th>
                     {% if user.is_staff %}
-                        <td>
-                            <a href="{% url 'editar_livro' livro.id %}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i> Editar
-                            </a>
-                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ livro.id }}">
-                                <i class="fas fa-trash-alt"></i> Excluir
-                            </button>
-                        </td>
+                        <th>Ações</th>
                     {% endif %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for livro in livros %}
+                    <tr>
+                        <td>{{ livro.titulo }}</td>
+                        <td>{{ livro.autor }}</td>
+                        <td>{{ livro.isbn }}</td>
+                        <td>
+                            {% if livro.disponivel %}
+                                Disponível
+                            {% else %}
+                                Indisponível
+                            {% endif %}
+                        </td>
+                        {% if user.is_staff %}
+                            <td>
+                                <a href="{% url 'editar_livro' livro.id %}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ livro.id }}">
+                                    <i class="fas fa-trash-alt"></i> Excluir
+                                </button>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     <a href="{% url 'adicionar_livro' %}" class="btn btn-success my-4">Adicionar Novo Livro</a>
 </div>
 
