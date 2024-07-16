@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Deleção{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4 text-center">Confirmar Deleção</h2>
+    <p>Você tem certeza que deseja excluir o livro "{{ livro.titulo }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a href="{% url 'lista_livros' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Devolução{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4 text-center">Confirmar Devolução</h2>
+    <p>Você tem certeza que deseja devolver o livro "{{ aluguel.livro.titulo }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Devolver</button>
+        <a href="{% url 'lista_alugueis' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

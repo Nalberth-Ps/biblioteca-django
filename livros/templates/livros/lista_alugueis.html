@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Meus Empréstimos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Meus Empréstimos</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Livro</th>
+                <th>Data de Aluguel</th>
+                <th>Data de Devolução</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aluguel in alugueis %}
+                <tr>
+                    <td>{{ aluguel.livro.titulo }}</td>
+                    <td>{{ aluguel.data_aluguel }}</td>
+                    <td>{{ aluguel.data_devolucao|default:"Em aberto" }}</td>
+                    <td>
+                        {% if not aluguel.data_devolucao %}
+                            <form action="{% url 'devolver_livro' aluguel.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary btn-sm">Devolver</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

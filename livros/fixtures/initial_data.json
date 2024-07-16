@@ -1,0 +1,32 @@
+[
+  {
+      "model": "livros.livro",
+      "pk": 1,
+      "fields": {
+          "titulo": "O Senhor dos Anéis",
+          "autor": "J.R.R. Tolkien",
+          "isbn": "9780544003415",
+          "disponivel": true
+      }
+  },
+  {
+      "model": "livros.livro",
+      "pk": 2,
+      "fields": {
+          "titulo": "Harry Potter e a Pedra Filosofal",
+          "autor": "J.K. Rowling",
+          "isbn": "9780747532699",
+          "disponivel": true
+      }
+  },
+  {
+      "model": "livros.livro",
+      "pk": 3,
+      "fields": {
+          "titulo": "1984",
+          "autor": "George Orwell",
+          "isbn": "9780451524935",
+          "disponivel": true
+      }
+  }
+]
