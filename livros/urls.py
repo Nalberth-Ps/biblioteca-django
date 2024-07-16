@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import lista_livros, alugar_livro, adicionar_livro, editar_livro, deletar_livro, lista_alugueis, devolver_livro, registro
+from .views import lista_livros, alugar_livro, adicionar_livro, editar_livro, deletar_livro, lista_alugueis, devolver_livro, criar_conta
 
 urlpatterns = [
     path('', lista_livros, name='lista_livros'),
@@ -9,5 +9,5 @@ urlpatterns = [
     path('deletar/<int:livro_id>/', deletar_livro, name='deletar_livro'),
     path('alugueis/', lista_alugueis, name='lista_alugueis'),
     path('devolver/<int:aluguel_id>/', devolver_livro, name='devolver_livro'),
-    path('registro/', registro, name='registro'),
+    path('criar-conta/', criar_conta, name='criar_conta'),
 ]
