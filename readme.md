@@ -12,7 +12,7 @@ TODO: Adicionar descrição do projeto
 1. Clone o repositório:
 
    ```sh
-   git clone https://github.com/seu-usuario/Biblioteca-Django.git
+   git clone https://github.com/Nalberth-Ps/biblioteca-django
    cd Biblioteca-Django
    ```
 
