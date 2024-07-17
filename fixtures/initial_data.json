@@ -101,7 +101,7 @@
             "resumo": "Uma das maiores obras de fantasia de todos os tempos, escrita por J.R.R. Tolkien.",
             "data_publicacao": "1954-07-29",
             "editora": "Allen & Unwin",
-            "capa": "images/Game_of_Thrones_capa.webp",
+            "capa": "images/senhor_dos_aneis.webp",
             "categorias": [1]
         }
     },
@@ -116,7 +116,7 @@
             "resumo": "O primeiro livro da série Harry Potter, onde conhecemos o mundo mágico de J.K. Rowling.",
             "data_publicacao": "1997-06-26",
             "editora": "Bloomsbury",
-            "capa": "images/Game_of_Thrones_capa.webp",
+            "capa": "images/harry_potter_pedra.webp",
             "categorias": [1]
         }
     },
@@ -131,7 +131,7 @@
             "resumo": "Uma distopia clássica que explora os perigos de um regime totalitário e a perda da liberdade.",
             "data_publicacao": "1949-06-08",
             "editora": "Secker & Warburg",
-            "capa": "images/Game_of_Thrones_capa.webp",
+            "capa": "images/1984.webp",
             "categorias": [3]
         }
     },
@@ -146,7 +146,7 @@
             "resumo": "A história de Bilbo Bolseiro, um hobbit que embarca em uma aventura inesperada.",
             "data_publicacao": "1937-09-21",
             "editora": "Allen & Unwin",
-            "capa": "images/Game_of_Thrones_capa.webp",
+            "capa": "images/hobbit.webp",
             "categorias": [1]
         }
     },
@@ -176,7 +176,7 @@
             "resumo": "Um clássico da ficção científica que narra a luta pelo controle de um deserto valioso.",
             "data_publicacao": "1965-08-01",
             "editora": "Chilton Books",
-            "capa": "images/Game_of_Thrones_capa.webp",
+            "capa": "images/Dune.webp",
             "categorias": [2]
         }
     },
@@ -191,7 +191,7 @@
             "resumo": "Uma obra-prima sobre as injustiças raciais e a perda da inocência.",
             "data_publicacao": "1960-07-11",
             "editora": "J.B. Lippincott & Co.",
-            "capa": "images/Game_of_Thrones_capa.webp",
+            "capa": "images/mockingbird.webp",
             "categorias": [3]
         }
     },
@@ -206,7 +206,7 @@
             "resumo": "Um romance clássico que explora temas de amor e sociedade na Inglaterra do século XIX.",
             "data_publicacao": "1813-01-28",
             "editora": "T. Egerton, Whitehall",
-            "capa": "images/Game_of_Thrones_capa.webp",
+            "capa": "images/pride_prejudice.webp",
             "categorias": [4]
         }
     },
@@ -221,7 +221,7 @@
             "resumo": "Uma crítica mordaz ao sonho americano através da história de Jay Gatsby.",
             "data_publicacao": "1925-04-10",
             "editora": "Charles Scribner's Sons",
-            "capa": "images/Game_of_Thrones_capa.webp",
+            "capa": "images/great_gatsby.webp",
             "categorias": [3]
         }
     },
@@ -236,7 +236,7 @@
             "resumo": "A épica jornada do Capitão Ahab em busca da baleia branca Moby Dick.",
             "data_publicacao": "1851-11-14",
             "editora": "Richard Bentley",
-            "capa": "images/Game_of_Thrones_capa.webp",
+            "capa": "images/moby_dick.webp",
             "categorias": [3]
         }
     }
